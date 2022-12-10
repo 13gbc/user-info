@@ -1,5 +1,6 @@
 # Get the list of all users on the system
 $users = Get-LocalUser
+Write-Output $users
 
 # Loop over the users and display their details
 foreach ($user in $users) {
