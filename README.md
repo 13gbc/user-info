@@ -1,3 +1,3 @@
 # user-info
 
-Script to gather user information on a linux host
+Scripts to gather user information on popular operating systems
