@@ -1,3 +1,6 @@
 # user-info
 
-Scripts to gather user information on popular operating systems
+Scripts for quickly gathering information on popular operating systems and their users.
+
+
+
