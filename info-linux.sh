@@ -18,6 +18,7 @@ open_files=$(lsof -u $(whoami))
 # Print the results
 date
 hostname
+whoami
 id
 echo -e "\n################################################################################"
 echo -e "Logged-in users:\n"
@@ -40,8 +41,7 @@ echo  -e "Crontab:\n"
 crontab -l
 
 echo -e "\n################################################################################"
-echo  -e "/etc/passwd\n"
-cat /etc/passwd
+
 
 echo -e "\n################################################################################"
 echo  -e "Files open by the current user:\n"
