@@ -1,4 +1,5 @@
 #!/bin/bash
+#set -x
 
 # Display a list of logged-in users
 logged_in_users=$(who)
@@ -15,7 +16,12 @@ bash_history=$(tail -n 5 ~/.bash_history)
 # Display the files open by the current user
 open_files=$(lsof -u $(whoami))
 
+# Reports the most recent login of all users or of a given user
+lastlog=$(lastlog)
+
 # Print the results
+echo -e "\n################################################################################"
+echo -e "Reference:\n"
 date
 hostname
 whoami
@@ -41,7 +47,8 @@ echo  -e "Crontab:\n"
 crontab -l
 
 echo -e "\n################################################################################"
-
+echo  -e "Last Login of all users\n"
+echo "$lastlog"
 
 echo -e "\n################################################################################"
 echo  -e "Files open by the current user:\n"
