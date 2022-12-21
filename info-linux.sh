@@ -47,7 +47,7 @@ display_uid_zero_accounts() {
 
 # Function to display the last 5 lines of the current user's Bash history
 display_bash_history() {
-  tail -n 5 ~/.bash_history
+  tail -n 10 ~/.bash_history
 }
 
 # Function to display the files open by the current user
@@ -61,28 +61,39 @@ display_lastlog() {
 }
 
 # Print the results
+echo ""
 echo "################################################################################"
 echo "Reference:"
 date
 hostname
 whoami
 id
+echo ""
 echo "################################################################################"
 echo "Logged-in users:"
 display_logged_in_users
 
+echo ""
 echo "################################################################################"
 echo "Last logins:"
 display_last_logins
 
+echo ""
 echo "################################################################################"
 echo "Accounts with a user ID of zero:"
 display_uid_zero_accounts
 
+echo ""
 echo "################################################################################"
 echo "/etc/passwd"
-cat /etc/passwd
+sort -nk3 -t : /etc/passwd
 
+echo ""
 echo "################################################################################"
 echo "Crontab:"
 crontab -l
+
+echo ""
+echo "################################################################################"
+echo "Bash History:"
+display_bash_history
