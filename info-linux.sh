@@ -1,55 +1,88 @@
 #!/bin/bash
-#set -x
+set -euo pipefail
 
-# Display a list of logged-in users
-logged_in_users=$(who)
+# Set strict error checking and exit on non-zero status codes
 
-# Display the last 5 logins
-last_logins=$(last -Faiwx -n 10)
+# Display usage message
+usage() {
+  echo "Usage: $0 [OPTION]..."
+  echo "Generate a system report."
+  echo ""
+  echo "  -h, --help    display this help and exit"
+  echo "  -v, --verbose increase verbosity"
+}
 
-# Display accounts with a user ID of zero
-uid_zero_accounts=$(grep ':x:0:' /etc/passwd)
+# Parse command line options
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    -v|--verbose)
+      verbose=true
+      shift
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
 
-# Display the last 5 lines of the current user's Bash history
-bash_history=$(tail -n 5 ~/.bash_history)
+# Function to display logged-in users
+display_logged_in_users() {
+  who
+}
 
-# Display the files open by the current user
-open_files=$(lsof -u $(whoami))
+# Function to display last logins
+display_last_logins() {
+  last -Faiwx -n 10
+}
 
-# Reports the most recent login of all users or of a given user
-lastlog=$(lastlog)
+# Function to display accounts with a user ID of zero
+display_uid_zero_accounts() {
+  grep ':x:0:' /etc/passwd
+}
+
+# Function to display the last 5 lines of the current user's Bash history
+display_bash_history() {
+  tail -n 5 ~/.bash_history
+}
+
+# Function to display the files open by the current user
+display_open_files() {
+  lsof -u "$(whoami)"
+}
+
+# Function to display the most recent login of all users or of a given user
+display_lastlog() {
+  lastlog
+}
 
 # Print the results
-echo -e "\n################################################################################"
-echo -e "Reference:\n"
+echo "################################################################################"
+echo "Reference:"
 date
 hostname
 whoami
 id
-echo -e "\n################################################################################"
-echo -e "Logged-in users:\n"
-echo "$logged_in_users"
+echo "################################################################################"
+echo "Logged-in users:"
+display_logged_in_users
 
-echo -e "\n################################################################################"
-echo -e "Last 5 logins:\n"
-echo "$last_logins"
+echo "################################################################################"
+echo "Last logins:"
+display_last_logins
 
-echo -e "\n################################################################################"
-echo  -e "Accounts with a user ID of zero:\n"
-echo "$uid_zero_accounts"
+echo "################################################################################"
+echo "Accounts with a user ID of zero:"
+display_uid_zero_accounts
 
-echo -e "\n################################################################################"
-echo  -e "/etc/passwd\n"
+echo "################################################################################"
+echo "/etc/passwd"
 cat /etc/passwd
 
-echo -e "\n################################################################################"
-echo  -e "Crontab:\n"
+echo "################################################################################"
+echo "Crontab:"
 crontab -l
-
-echo -e "\n################################################################################"
-echo  -e "Last Login of all users\n"
-echo "$lastlog"
-
-echo -e "\n################################################################################"
-echo  -e "Files open by the current user:\n"
-echo "$open_files"
