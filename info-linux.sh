@@ -97,15 +97,11 @@ echo ""
 echo "################################################################################"
 echo "Bash History:"
 display_bash_history
-echo "Find File with SGID Set:"
-find $HOME -perm /2000
 
 echo ""
 echo "################################################################################"
 echo "File size > 10 meg:"
 find $HOME -size +10000k -print
-echo "Find File with SUID & SGID Set:"
-find $HOME -perm -6000
 
 echo ""
 echo "################################################################################"
